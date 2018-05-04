@@ -10,7 +10,6 @@ import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletCon
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
 public class ContainerCustomizer {
     @Value("${server.port}")
     private Integer webPort;
