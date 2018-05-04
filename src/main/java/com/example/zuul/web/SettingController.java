@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,5 +52,16 @@ public class SettingController {
         map.put("success", flag);
         map.put("code", code);
         return map;
+    }
+
+    @RequestMapping(value = "/getWhiteList", method = RequestMethod.GET)
+    @ResponseBody
+    public List<ZuulRouteVO> getWhiteList() {
+        List<ZuulRouteVO> list = new ArrayList<>();
+        List<ZuulRouteVO> results = jdbcTemplate.query("select * from gateway_api_define", new BeanPropertyRowMapper<>(ZuulRouteVO.class));
+        if (CollectionUtils.isNotEmpty(results)) {
+            list = results;
+        }
+        return list;
     }
 }
