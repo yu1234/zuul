@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+    <title>Cross-Browser QRCode generator for Javascript</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+</head>
+<body style="text-align: center;">
+<input id="text" type="text" value="http://mail.turbopush.cn:8080" style="width:80%"/><br/>
+<div id="qrcode" style="width:100%; height:100px; margin-top:15px;"></div>
+
+<script type="text/javascript">
+    function makeCode() {
+        var elText = document.getElementById("text");
+        var host = window.location.host;
+        var host2 = document.domain;
+        console.log(host, host2)
+        if (!elText.value) {
+            alert("Input a text");
+            elText.focus();
+            return;
+        }
+        var codeText = {value: elText.value, key: md5(elText.value)}
+        console.log(codeText)
+        $("#qrcode").empty();
+        var qrcode = $('#qrcode').qrcode({width: 128, height: 128, text: JSON.stringify(codeText)});
+    }
+
+    makeCode();
+
+    $("#text").on("blur", function () {
+        makeCode();
+    }).on("keydown", function (e) {
+        if (e.keyCode == 13) {
+            makeCode();
+        }
+    });
+
+</script>
+</body>
+</html>
